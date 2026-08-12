@@ -1,0 +1,119 @@
+@import "tailwindcss";
+
+/* ============================================================
+   CHLOE HILLS — Design Tokens
+   Editorial luxury system: restrained neutrals, one muted metal
+   accent used only as a line or label, never a fill.
+   ============================================================ */
+@theme {
+  /* Palette */
+  --color-bone: #edeae3;        /* app background — warm stone, not cream */
+  --color-surface: #f7f5f1;     /* card / panel surface, one step lighter */
+  --color-surface-raised: #ffffff;
+  --color-ink: #1c1b19;         /* primary text, near-black warm */
+  --color-ink-soft: #4a463f;    /* secondary text */
+  --color-stone: #a69787;       /* muted / placeholder text, icons */
+  --color-hairline: #ddd6cc;    /* borders, dividers */
+  --color-hairline-strong: #c8beb0;
+  --color-gold: #9c7c42;        /* the one accent — links, focus, price */
+  --color-gold-soft: #b9a077;
+  --color-error: #8c2f2f;
+  --color-error-bg: #f5e9e7;
+  --color-success: #4b6c4f;
+  --color-success-bg: #eaeee7;
+
+  /* Type families */
+  --font-display: "Fraunces", "Iowan Old Style", serif;
+  --font-body: "Manrope", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  /* Layout rhythm */
+  --spacing-section: 6rem;
+  --radius-none: 0px;
+
+  /* Motion — kept short and quiet, respects reduced-motion */
+  --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  * {
+    border-color: var(--color-hairline);
+  }
+
+  html {
+    background: var(--color-bone);
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-body);
+    background: var(--color-bone);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+  }
+
+  a {
+    color: inherit;
+  }
+
+  /* Visible, deliberate focus state — never suppressed */
+  :focus-visible {
+    outline: 1.5px solid var(--color-gold);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* Eyebrow / section label — the recurring editorial signature:
+     small-caps, tracked-out, hairline-adjacent labels used instead
+     of decorative icons or numbering. */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-stone);
+  }
+
+  /* Underline-draw link — the one motion signature, used for
+     in-copy links and nav items. Quiet, no color shift needed. */
+  .link-reveal {
+    position: relative;
+    text-decoration: none;
+  }
+  .link-reveal::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 100%;
+    bottom: -2px;
+    height: 1px;
+    background: currentColor;
+    transition: right 0.35s var(--ease-editorial);
+  }
+  .link-reveal:hover::after,
+  .link-reveal:focus-visible::after {
+    right: 0;
+  }
+}
